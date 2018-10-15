@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        class FoodDish{
+            constructor(name,price){
+                this.name = name;
+                this.price = price;
+            }
+        }
+
+        var dish
+        let orderedDishes = [];
+        let totalBill = 0;
+        let discountedBill = 0;
+
+        function takeOder(){
+
+            event.preventDefault();
+            orderedDishes.length = 0;
+            
+            let dishSelector = document.querySelectorAll('.dish-selector');
+            dishSelector.forEach(function(tag){
+                if(tag.checked){
+                    let name = tag.getAttribute('data-name');
+                    let price = tag.getAttribute('data-price');
+
+                    totalBill += +price;
+
+                    let orderedDish = new FoodDish(name, price);
+                    orderedDishes.push(orderedDish);
+                }
+            });
+
+            discountedBill = totalBill;
+
+            if(totalBill > 300){
+                discountedBill = totalBill - (totalBill * 5 / 100);
+            }
+            console.log('Total Jurmana'+ '  ' + totalBill);
+            console.log('Discounted Jurmana'+ '  ' +discountedBill);
+
+        }
+
+    </script>
+</head>
+<style>
+
+</style>
+
+<body>
+
+    <form id="orderForm" onsubmit="takeOder()" action="#">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Dish Name</th>
+                    <th>Order</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Karachi Baryani</td>
+                    <td><input data-name="Karachi Baryani" data-price="100" type="checkbox" class="dish-selector"></th>
+                    <td><input type="number" class="qty"></td>
+                    <td>100</td>
+                </tr>
+
+                <tr>
+                    <td>Zinger Burger</td>
+                    <td><input data-name="Zinger Burger" data-price="300" type="checkbox" class="dish-selector"></td>
+                    <td><input type="number" class="qty"></td>
+                    <td>300</td>
+                </tr>
+
+                <tr>
+                    <td>Piza</td>
+                    <td><input data-name="Piza" data-price="1000" type="checkbox" class="dish-selector"></td>
+                    <td><input type="number" class="qty"></td>
+                    <td>1000</td>
+                </tr>
+
+                <tr>
+                    <td>Cheese Piza</td>
+                    <td><input data-name="Cheese Piza" data-price="1500" type="checkbox" class="dish-selector"></td>
+                    <td><input type="number" class="qty"></td>
+                    <td>1500</td>
+                </tr>
+
+                <tr>
+                    <td colspan="4"><button>submit Order</button></td>
+                </tr>
+
+
+            </tbody>
+        </table>
+    </form>
+</body>
+
+</html>

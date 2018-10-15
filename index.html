@@ -6,31 +6,165 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script>
-        class FoodDish{
-            constructor(name,price){
+    <link rel="stylesheet" href="css.css">
+
+</head>
+<style>
+    body{
+    font-family: google ;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+@font-face{
+    font-family: 'google';
+    src: url('Product Sans Regular.ttf');
+}
+table{
+    border-radius: 5px;
+    background-color: #a9dfec;
+    padding: 20px;
+}
+input.qty{
+    width: 5vw;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;   
+}
+button {
+    width: 50%;
+    color: red;
+    background-color: #4CAF50;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    left: 50%;
+    
+ }
+button:hover { 
+    border: solid 5px blueviolet;
+    transition: border-width 0.6s linear;
+    }
+</style>
+
+
+<body>
+    <center>
+        <form id="orderForm" onsubmit="takeOder()" action="#">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Dish Name</th>
+                        <th>Order</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Karachi Baryani</td>
+                        <td>
+                            <label class="container">
+                                <input data-name="Karachi Baryani" data-price="100" type="checkbox" class="dish-selector" type="checkbox">
+                                <span class="checkmark"></span>
+                            </label>
+
+                            </th>
+                        <td><input type="number" class="qty"></td>
+                        <td>100</td>
+                    </tr>
+
+                    <tr>
+                        <td>Zinger Burger</td>
+                        <td>
+                            <label class="container">
+                                <input data-name="Zinger Burger" data-price="300" type="checkbox" class="dish-selector" type="checkbox">
+                                <span class="checkmark"></span>
+                            </label>
+                        </td>
+                        <td><input type="number" class="qty"></td>
+                        <td>300</td>
+                    </tr>
+
+                    <tr>
+                        <td>Piza</td>
+                        <td>
+                            <label class="container">
+                                <input data-name="Piza" data-price="1000" type="checkbox" class="dish-selector" type="checkbox">
+                                <span class="checkmark"></span>
+                            </label>
+                        </td>
+                        <td><input type="number" class="qty"></td>
+                        <td>1000</td>
+                    </tr>
+
+                    <tr>
+                        <td>Cheese Piza</td>
+                        <td>
+                            <label class="container">
+                                <input data-name="Cheese Piza" data-price="1500" type="checkbox" class="dish-selector" type="checkbox" >
+                                <span class="checkmark"></span>
+                            </label>
+                        </td>
+                        <td><input type="number" class="qty"></td>
+                        <td>1500</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="4"><button>Place Order</button></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td colspan="2" id="totalPrice"></td>
+                    </tr>
+                  <!--   <tr>
+                        <td colspan="2"></td>
+                        <td colspan="2" class="printDiscountedPrice"></td>
+                    </tr> -->
+
+
+                </tbody>
+            </table>
+        </form>
+</body>
+</center>
+<script>
+        class FoodDish {
+            constructor(name, price) {
                 this.name = name;
                 this.price = price;
             }
         }
 
-        var dish
+
         let orderedDishes = [];
         let totalBill = 0;
         let discountedBill = 0;
 
-        function takeOder(){
+        function takeOder() {
 
             event.preventDefault();
             orderedDishes.length = 0;
-            
+
             let dishSelector = document.querySelectorAll('.dish-selector');
-            dishSelector.forEach(function(tag){
-                if(tag.checked){
+            dishSelector.forEach(function (tag) {
+                if (tag.checked) {
+
+                    var qty = tag.parentNode.parentNode.nextElementSibling.querySelector('input').value;
+                    console.log(qty);
+
                     let name = tag.getAttribute('data-name');
                     let price = tag.getAttribute('data-price');
 
-                    totalBill += +price;
+                        newPrice = price * qty;
+                        console.log(newPrice)
+
+                    totalBill += +newPrice;
 
                     let orderedDish = new FoodDish(name, price);
                     orderedDishes.push(orderedDish);
@@ -39,69 +173,18 @@
 
             discountedBill = totalBill;
 
-            if(totalBill > 300){
+            if (totalBill > 300) {
                 discountedBill = totalBill - (totalBill * 5 / 100);
             }
-            console.log('Total Jurmana'+ '  ' + totalBill);
-            console.log('Discounted Jurmana'+ '  ' +discountedBill);
+            console.log('Total Jurmana' + '  ' + totalBill);
+            console.log('Discounted Jurmana' + '  ' + discountedBill);
+            
+            var price1 = document.createElement('p');
+            price1.innerHTML = '<h3>RS' + totalBill + '</h3>';
+            totalPrice.appendChild(price1);
 
         }
 
     </script>
-</head>
-<style>
-
-</style>
-
-<body>
-
-    <form id="orderForm" onsubmit="takeOder()" action="#">
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Dish Name</th>
-                    <th>Order</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Karachi Baryani</td>
-                    <td><input data-name="Karachi Baryani" data-price="100" type="checkbox" class="dish-selector"></th>
-                    <td><input type="number" class="qty"></td>
-                    <td>100</td>
-                </tr>
-
-                <tr>
-                    <td>Zinger Burger</td>
-                    <td><input data-name="Zinger Burger" data-price="300" type="checkbox" class="dish-selector"></td>
-                    <td><input type="number" class="qty"></td>
-                    <td>300</td>
-                </tr>
-
-                <tr>
-                    <td>Piza</td>
-                    <td><input data-name="Piza" data-price="1000" type="checkbox" class="dish-selector"></td>
-                    <td><input type="number" class="qty"></td>
-                    <td>1000</td>
-                </tr>
-
-                <tr>
-                    <td>Cheese Piza</td>
-                    <td><input data-name="Cheese Piza" data-price="1500" type="checkbox" class="dish-selector"></td>
-                    <td><input type="number" class="qty"></td>
-                    <td>1500</td>
-                </tr>
-
-                <tr>
-                    <td colspan="4"><button>submit Order</button></td>
-                </tr>
-
-
-            </tbody>
-        </table>
-    </form>
-</body>
 
 </html>

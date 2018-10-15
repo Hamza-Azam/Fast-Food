@@ -144,12 +144,17 @@ button:hover {
 
         let orderedDishes = [];
         let totalBill = 0;
+
         let discountedBill = 0;
 
         function takeOder() {
 
             event.preventDefault();
             orderedDishes.length = 0;
+            totalBill = 0;
+            totalPrice.innerHTML='';
+
+
 
             let dishSelector = document.querySelectorAll('.dish-selector');
             dishSelector.forEach(function (tag) {

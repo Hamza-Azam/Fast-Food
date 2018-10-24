@@ -9,60 +9,22 @@
     <link rel="stylesheet" href="css.css">
 
 </head>
-<style>
-    body{
-    font-family: google ;
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
-}
-@font-face{
-    font-family: 'google';
-    src: url('Product Sans Regular.ttf');
-}
-table{
-    border-radius: 5px;
-    background-color: #a9dfec;
-    padding: 20px;
-}
-input.qty{
-    width: 5vw;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;   
-}
-button {
-    width: 50%;
-    color: red;
-    background-color: #4CAF50;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border-radius: 4px;
-    cursor: pointer;
-    position: relative;
-    left: 50%;
-    
- }
-button:hover { 
-    border: solid 5px blueviolet;
-    transition: border-width 0.6s linear;
-    }
-</style>
-
-
 <body>
     <center>
         <form id="orderForm" onsubmit="takeOder()" action="#">
-            <table border="1">
+            <div id="personDiv">
+                <h3>Coustomer Name</h3>
+                <input type="text" id="personName" class="person" placeholder="Enter Name" />
+                <h3>Coustomer Number</h3>
+                <input type="number" id="personNum" class="person" placeholder="Enter Number" />
+            </div>
+            <table>
                 <thead>
                     <tr>
-                        <th>Dish Name</th>
-                        <th>Order</th>
-                        <th>Qty</th>
-                        <th>Price</th>
+                        <th>DISH NAME</th>
+                        <th>ORDER</th>
+                        <th>QTY</th>
+                        <th>PRICE</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,12 +32,12 @@ button:hover {
                         <td>Karachi Baryani</td>
                         <td>
                             <label class="container">
-                                <input data-name="Karachi Baryani" data-price="100" type="checkbox" class="dish-selector" type="checkbox">
+                                <input data-name="Karachi Baryani" data-price="100" class="dish-selector" type="checkbox" />
                                 <span class="checkmark"></span>
                             </label>
 
                             </th>
-                        <td><input type="number" class="qty"></td>
+                        <td><input type="number" class="qty" /></td>
                         <td>100</td>
                     </tr>
 
@@ -83,7 +45,7 @@ button:hover {
                         <td>Zinger Burger</td>
                         <td>
                             <label class="container">
-                                <input data-name="Zinger Burger" data-price="300" type="checkbox" class="dish-selector" type="checkbox">
+                                <input data-name="Zinger Burger" data-price="300" class="dish-selector" type="checkbox" />
                                 <span class="checkmark"></span>
                             </label>
                         </td>
@@ -95,11 +57,11 @@ button:hover {
                         <td>Piza</td>
                         <td>
                             <label class="container">
-                                <input data-name="Piza" data-price="1000" type="checkbox" class="dish-selector" type="checkbox">
+                                <input data-name="Piza" data-price="1000" class="dish-selector" type="checkbox" />
                                 <span class="checkmark"></span>
                             </label>
                         </td>
-                        <td><input type="number" class="qty"></td>
+                        <td><input type="number" class="qty" /></td>
                         <td>1000</td>
                     </tr>
 
@@ -107,11 +69,11 @@ button:hover {
                         <td>Cheese Piza</td>
                         <td>
                             <label class="container">
-                                <input data-name="Cheese Piza" data-price="1500" type="checkbox" class="dish-selector" type="checkbox" >
+                                <input data-name="Cheese Piza" data-price="1500" class="dish-selector" type="checkbox" />
                                 <span class="checkmark"></span>
                             </label>
                         </td>
-                        <td><input type="number" class="qty"></td>
+                        <td><input type="number" class="qty" /></td>
                         <td>1500</td>
                     </tr>
 
@@ -119,10 +81,10 @@ button:hover {
                         <td colspan="4"><button>Place Order</button></td>
                     </tr>
                     <tr>
-                        <td colspan="2"></td>
-                        <td colspan="2" id="totalPrice"></td>
+                        <!-- <td colspan="2"></td> -->
+                        <td colspan="4" id="totalPrice"></td>
                     </tr>
-                  <!--   <tr>
+                    <!--   <tr>
                         <td colspan="2"></td>
                         <td colspan="2" class="printDiscountedPrice"></td>
                     </tr> -->
@@ -131,65 +93,87 @@ button:hover {
                 </tbody>
             </table>
         </form>
+        <!-- <div id="billResult"></div> -->
 </body>
 </center>
+
+
 <script>
-        class FoodDish {
-            constructor(name, price) {
-                this.name = name;
-                this.price = price;
-            }
+
+    //Classsss
+    class FoodDish {
+        constructor(name, price) {
+            this.name = name;
+            this.price = price;
         }
+    }
 
 
-        let orderedDishes = [];
-        let totalBill = 0;
+    let orderedDishes = [];
+    let totalBill = 0;
 
-        let discountedBill = 0;
+    let discountedBill = 0;
+    //oder
+    function takeOder() {
 
-        function takeOder() {
-
-            event.preventDefault();
-            orderedDishes.length = 0;
-            totalBill = 0;
-            totalPrice.innerHTML='';
+        event.preventDefault();
+        orderedDishes.length = 0;
+        totalBill = 0;
+        totalPrice.innerHTML = '';
 
 
 
-            let dishSelector = document.querySelectorAll('.dish-selector');
-            dishSelector.forEach(function (tag) {
-                if (tag.checked) {
+        let dishSelector = document.querySelectorAll('.dish-selector');
+        dishSelector.forEach(function (tag) {
+            if (tag.checked) {
 
-                    var qty = tag.parentNode.parentNode.nextElementSibling.querySelector('input').value;
-                    console.log(qty);
+                var qty = tag.parentNode.parentNode.nextElementSibling.querySelector('input').value;
+                console.log(qty);
 
-                    let name = tag.getAttribute('data-name');
-                    let price = tag.getAttribute('data-price');
+                let name = tag.getAttribute('data-name');
+                let price = tag.getAttribute('data-price');
 
-                        newPrice = price * qty;
-                        console.log(newPrice)
+                newPrice = price * qty;
+                console.log(newPrice)
 
-                    totalBill += +newPrice;
+                totalBill += +newPrice;
 
-                    let orderedDish = new FoodDish(name, price);
-                    orderedDishes.push(orderedDish);
-                }
-            });
-
-            discountedBill = totalBill;
-
-            if (totalBill > 300) {
-                discountedBill = totalBill - (totalBill * 5 / 100);
+                let orderedDish = new FoodDish(name, price);
+                orderedDishes.push(orderedDish);
             }
-            console.log('Total Jurmana' + '  ' + totalBill);
-            console.log('Discounted Jurmana' + '  ' + discountedBill);
-            
-            var price1 = document.createElement('p');
-            price1.innerHTML = '<h3>RS' + totalBill + '</h3>';
-            totalPrice.appendChild(price1);
+        });
 
+        discountedBill = totalBill;
+
+        if (totalBill > 300) {
+            discountedBill = totalBill - (totalBill * 5 / 100);
         }
+        console.log('Total Jurmana' + ' = ' + totalBill);
+        console.log('Discounted Jurmana' + ' = ' + discountedBill);
 
-    </script>
+        var personName = document.getElementById('personName').value;
+        var personNum = document.getElementById('personNum').value;
+
+        var price1 = document.createElement('p');
+        price1.innerHTML = '<h3>Name :' + personName + '</h3><h3>No. :' + personNum + '</h3><h3>RS. ' + totalBill + '</h3>';
+        totalPrice.appendChild(price1);
+        //end of function takeOder
+        }       
+        //JASON
+        // var myObj, myJSON, text, obj;
+
+        //Storing data:
+        // myObj = { price1 };
+        // myJSON = JSON.stringify(myObj);
+        // localStorage.setItem("testJSON", myJSON);
+
+        //Retrieving data:
+        // text = localStorage.getItem("testJSON");
+        // obj = JSON.parse(text);
+        // document.getElementById("demo").innerHTML = obj.name;
+        localStorage.setItem("keyname", JSON.stringify(studentArray));
+        localStorage.setItem("Student Data", JSON.stringify(ArrayName));
+
+</script>
 
 </html>
